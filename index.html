@@ -3,36 +3,184 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VOIDSCRAM • Scramjet</title>
-  <link rel="stylesheet" href="style.css">
+  <title>VOIDSCRAM</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      background: #0a0614;
+      color: #e6d9ff;
+      font-family: 'Inter', system_ui, sans-serif;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+      position: relative;
+      overflow-y: auto;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 30% 20%, rgba(147, 51, 234, 0.18) 0%, transparent 60%),
+                  radial-gradient(circle at 70% 80%, rgba(0, 255, 240, 0.12) 0%, transparent 65%);
+      z-index: -2;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .logo {
+      width: 96px;
+      height: 96px;
+      background: linear-gradient(135deg, #9333ea, #22d3ee);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.2rem;
+      font-size: 2.9rem;
+      font-weight: 700;
+      color: white;
+      box-shadow: 0 0 50px rgba(147, 51, 234, 0.85);
+    }
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3.1rem;
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      background: linear-gradient(90deg, #c084fc, #67e8f9, #e0bbff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .tagline {
+      font-size: 1.15rem;
+      color: #b3a0ff;
+      margin-top: 0.5rem;
+    }
+
+    .search-container {
+      max-width: 620px;
+      margin: 2rem auto;
+    }
+
+    #urlInput {
+      width: 100%;
+      padding: 1.4rem 1.5rem;
+      font-size: 1.25rem;
+      background: rgba(25, 18, 48, 0.8);
+      border: 2px solid #a78bfa;
+      border-radius: 18px;
+      color: #f0e6ff;
+      outline: none;
+    }
+
+    #urlInput:focus {
+      border-color: #c084fc;
+      box-shadow: 0 0 20px rgba(192, 132, 252, 0.4);
+    }
+
+    .status {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: #a78bfa;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 5rem;
+      color: #9f8cff;
+      font-size: 0.9rem;
+      opacity: 0.75;
+    }
+  </style>
 </head>
 <body>
+
   <div class="header">
     <div class="logo">VS</div>
     <h1>VOIDSCRAM</h1>
-    <div class="tagline">Scramjet Powered • Fast & Hidden</div>
+    <div class="tagline">Scramjet Proxy</div>
   </div>
 
-  <div class="main">
-    <input type="text" id="urlInput" placeholder="https://youtube.com or any link..." autocomplete="off">
-
-    <div class="section-header">Quick Access</div>
-    <button onclick="navigateTo('https://www.youtube.com')">YouTube</button>
-    <button onclick="navigateTo('https://www.roblox.com')">Roblox</button>
-    <button onclick="navigateTo('https://www.tiktok.com')">TikTok</button>
-    <button onclick="navigateTo('https://discord.com')">Discord</button>
-    <button onclick="navigateTo('https://krunker.io')">Krunker.io</button>
-    <button onclick="navigateTo('https://shellshock.io')">Shell Shockers</button>
-    <button onclick="navigateTo('https://1v1.lol')">1v1.LOL</button>
-    <button onclick="navigateTo('https://slope-game.io')">Slope</button>
-    <button onclick="navigateTo('https://poki.com')">Poki Games</button>
+  <div class="search-container">
+    <input type="text" id="urlInput" placeholder="Enter any website (youtube.com, roblox.com...)" autocomplete="off">
+    <div class="status" id="status">Loading Scramjet...</div>
   </div>
 
   <div class="footer">
-    VOIDSCRAM • Powered by Scramjet + Wisp
+    VOIDSCRAM • Powered by Scramjet
   </div>
 
+  <!-- Load Scramjet -->
   <script src="https://cdn.jsdelivr.net/npm/@mercuryworkshop/scramjet@latest/dist/scramjet.bundle.js"></script>
-  <script src="main.js"></script>
+  
+  <script>
+    const WISP_SERVER = "wss://wisp.mercurywork.shop/";
+
+    let scramjetReady = false;
+
+    function updateStatus(text, color = "#a78bfa") {
+      document.getElementById("status").textContent = text;
+      document.getElementById("status").style.color = color;
+    }
+
+    async function initScramjet() {
+      if (typeof ScramjetFrame !== "undefined") {
+        scramjetReady = true;
+        updateStatus("Ready – Enter a website above", "#67e8f9");
+        return;
+      }
+
+      // Retry every second
+      setTimeout(initScramjet, 1000);
+    }
+
+    function navigateTo(url) {
+      if (!url) return;
+      if (!url.startsWith("http")) url = "https://" + url;
+
+      if (!scramjetReady || typeof ScramjetFrame === "undefined") {
+        alert("Scramjet is still loading. Please wait a few seconds and try again.");
+        return;
+      }
+
+      try {
+        updateStatus("Opening website...", "#67e8f9");
+
+        const frame = new ScramjetFrame({
+          transport: "wisp",
+          wisp: WISP_SERVER,
+          codec: "plain"
+        });
+
+        frame.navigate(url);
+        frame.attach(document.body);   // Full overlay
+
+      } catch (err) {
+        console.error(err);
+        updateStatus("Error – Opening in new tab...", "orange");
+        window.open(url, "_blank");
+      }
+    }
+
+    // Enter key support
+    document.getElementById("urlInput").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        navigateTo(e.target.value.trim());
+      }
+    });
+
+    // Initialize
+    window.addEventListener("load", () => {
+      initScramjet();
+    });
+  </script>
 </body>
 </html>
