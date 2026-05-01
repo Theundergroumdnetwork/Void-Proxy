@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VOID Proxy</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌀</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="/scram/scramjet.all.js"></script>
+    <script src="/baremux/index.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="register-sw.js" defer></script>
+    <script src="search.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <!-- Animated background -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+    <div class="bg-glow bg-glow-3"></div>
+
+    <!-- Main content -->
+    <main class="container">
+      <div class="hero">
+        <div class="logo-container">
+          <div class="logo-ring"></div>
+          <div class="logo-core">
+            <span class="logo-text">V</span>
+          </div>
+        </div>
+        <h1 class="title">
+          <span class="title-void">VOID</span>
+          <span class="title-proxy">PROXY</span>
+        </h1>
+        <p class="subtitle">Browse beyond boundaries</p>
+      </div>
+
+      <form id="proxy-form" class="search-container" autocomplete="off">
+        <div class="search-wrapper">
+          <div class="search-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.3-4.3"></path>
+            </svg>
+          </div>
+          <input
+            id="proxy-input"
+            type="text"
+            placeholder="Enter URL or search the web..."
+            spellcheck="false"
+          />
+          <input
+            id="proxy-search-engine"
+            type="hidden"
+            value="https://www.google.com/search?q=%s"
+          />
+          <button type="submit" class="go-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+      </form>
+
+      <div id="error-container" class="error-container" style="display: none;">
+        <p id="error-msg" class="error-msg"></p>
+        <pre id="error-code" class="error-code"></pre>
+      </div>
+
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <h3>Encrypted</h3>
+          <p>End-to-end encrypted browsing through secure transport</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"></path>
+            </svg>
+          </div>
+          <h3>Fast</h3>
+          <p>Powered by Scramjet's high-performance interception engine</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+            </svg>
+          </div>
+          <h3>Private</h3>
+          <p>Your browsing stays between you and the void</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <span>VOID Proxy &copy; 2025 &mdash; Powered by <a href="https://github.com/MercuryWorkshop/scramjet" target="_blank" rel="noopener">Scramjet</a></span>
+    </footer>
+  </body>
+</html>

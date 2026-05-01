@@ -1,0 +1,21 @@
+{
+  "name": "void-proxy",
+  "version": "1.0.0",
+  "description": "VOID Proxy - A modern web proxy powered by Scramjet",
+  "type": "module",
+  "scripts": {
+    "build": "node build.js",
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["proxy", "scramjet", "web-proxy"],
+  "author": "VOID",
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "@mercuryworkshop/bare-mux": "^2.1.9",
+    "@mercuryworkshop/libcurl-transport": "^1.5.2",
+    "@mercuryworkshop/scramjet": "https://github.com/MercuryWorkshop/scramjet/releases/download/v1.1.0/mercuryworkshop-scramjet-1.1.0.tgz",
+    "@mercuryworkshop/wisp-js": "^0.4.1",
+    "ws": "^8.18.3"
+  }
+}
