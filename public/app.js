@@ -17,7 +17,7 @@ const scramjet = new ScramjetController({
   },
 });
 
-scramjet.init();
+const scramjetReady = scramjet.init();
 
 const connection = new BareMux.BareMuxConnection("/baremux/worker.js");
 
@@ -41,6 +41,13 @@ form.addEventListener("submit", async (event) => {
     await registerSW();
   } catch (err) {
     showError("Failed to register service worker.", err.toString());
+    throw err;
+  }
+
+  try {
+    await scramjetReady;
+  } catch (err) {
+    showError("Failed to initialize Scramjet.", err.toString());
     throw err;
   }
 
@@ -72,6 +79,9 @@ form.addEventListener("submit", async (event) => {
     showError("Failed to set up transport.", err.toString());
     throw err;
   }
+
+  const existingFrame = document.getElementById("proxy-frame");
+  if (existingFrame) existingFrame.remove();
 
   const frame = scramjet.createFrame();
   frame.frame.id = "proxy-frame";
