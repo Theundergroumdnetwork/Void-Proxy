@@ -1,0 +1,35 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+# Rewrite all package-route requests to the edge function
+[[redirects]]
+  from   = "/scramjet/*"
+  to     = "/pkg/scramjet/:splat"
+  status = 200
+
+[[redirects]]
+  from   = "/controller/*"
+  to     = "/pkg/controller/:splat"
+  status = 200
+
+[[redirects]]
+  from   = "/libcurl/*"
+  to     = "/pkg/libcurl/:splat"
+  status = 200
+
+[[redirects]]
+  from   = "/baremux/*"
+  to     = "/pkg/baremux/:splat"
+  status = 200
+
+[[redirects]]
+  from   = "/epoxy/*"
+  to     = "/pkg/epoxy/:splat"
+  status = 200
+
+# SPA fallback — everything else → index.html
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200
